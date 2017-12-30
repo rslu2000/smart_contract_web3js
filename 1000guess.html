@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Hello World DApp</title>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body class="container">
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <tr>
+        <td>state</td>
+        <td id="state"></td>
+        <td>getBalance</td>
+        <td id="getBalance"></td>
+      </tr>
+      <tr>
+        <td>getMaxContenders</td>
+        <td id="getMaxContenders"></td>
+        <td>getLotteryMoney</td>
+        <td id="getLotteryMoney"></td>
+      </tr>
+      <tr>
+        <td>getDeveloperFee</td>
+        <td id="getDeveloperFee"></td>
+        <td>getBettingPrice</td>
+        <td id="getBettingPrice"></td>
+      </tr>
+      <tr>
+        <td>getDeveloperAddress</td>
+        <td id="getDeveloperAddress"></td>
+        <td>getBettingStatus</td>
+        <td id="getBettingStatus"></td>
+      </tr>
+    </table>
+    <!-- getDeveloperAddress<div id='getDeveloperAddress'></div>
+    getBettingStatus<span id='getBettingStatus'></span> -->
+    pay ether<input id="ether">
+    
+    <div>getBettingStastics
+      <button id="getBettingStasticsBtn">click</button>
+      result:<span id="getBettingStasticsResult"></span>
+    </div>
+    <div>addguess
+      <input id="addguessValue">
+      <button id="addguessBtn">click</button>
+      result:<span id="addguessResult"></span>
+    </div>
+    <div>findWinners
+      <input id="findWinnersValue">
+      <button id="findWinnersBtn">click</button>
+      result:<span id="findWinnersResult"></span>
+    </div>
+    <div>finish
+      <button id="finishBtn">click</button>
+      result:<span id="finishResult"></span>
+    </div>
+    <div>setBettingCondition
+            _contenders:<input id="_contenders">
+            _bettingprice:<input id="_bettingprice">
+      <button id="setBettingConditionBtn">click</button>
+      result:<span id="setBettingConditionResult"></span>
+    </div>
+    <div>setStatusPrice
+      <input id="setStatusPriceValue">
+      <button id="setStatusPriceBtn">click</button>
+      result:<span id="setStatusPriceResult"></span>
+    </div>
+
+  </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.5.5/Rx.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" defer></script>
+<script src="./1000guess.js"></script>
+
+</html>
