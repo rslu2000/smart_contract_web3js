@@ -49,11 +49,11 @@
     <div>findWinners
       <input id="findWinnersValue">
       <button id="findWinnersBtn">click</button>
-      txid:<span id="findWinnersTxid"></span> call result:<span id="findWinnersResult"></span>
+      </span> call result:<span id="findWinnersResult"></span>
     </div>
     <div>finish
       <button id="finishBtn">click</button>
-      txid:<span id="finishTxid"></span>
+      result:<span id="finishResult"></span>
     </div>
     <div>setBettingCondition
             _contenders:<input id="_contenders">
@@ -66,19 +66,12 @@
       <button id="setStatusPriceBtn">click</button>
       txid:<span id="setStatusPriceTxid"></span>
     </div>
-    <div>SentPrizeToWinner:
+    <div>Show Event <button id="history">History</button>:
       <table class="table table-bordered" >
-        <thead><th><td>guess</td><td>lotterynumber</td><td>money(wei)</td><td>timestamp</td><td>winner</td></th></thead>
-        <tbody id="eventSentPrizeToWinnerResult"></tbody>
+        <thead><th><td>amount(wei)</td><td>balance(wei)</td><td>guess</td><td>lotterynumber</td><td>money(wei)</td><td>timestamp</td><td>winner</td></th></thead>
+        <tbody id="event"></tbody>
       </table>
     </div>
-    <div>SentDeveloperFee:
-      <table class="table table-bordered" >
-        <thead><th><td>amount(wei)</td><td>balance(wei)</td></th></thead>
-        <tbody id="eventSentDeveloperFeeResult"></tbody>
-      </table>
-    </div>
-
   </div>
 
 </body>
