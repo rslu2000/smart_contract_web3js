@@ -96,44 +96,44 @@ function decodeSentDeveloperFee(data) {
     return SentDeveloperFee;
 }
 
-Rx.Observable.fromEvent($('#getBettingStasticsBtn'),'click')                    // fromEvent 監聽事件發生
-.mergeMap(()=>{                                                                 // mergeMap 承接上個結果 繼續做事 回傳Observable 則使用mergeMap, 如回傳一般值 使用 map 就好
-    let ether=parseFloat(document.getElementById('ether').value);               // 抓 ether 值
-    return call('getBettingStastics',{value:web3.toWei(ether)})                 // 模擬合約
-}).mergeMap((result)=>{         
-    $('#getBettingStasticsResult').html(JSON.stringify(result))                 // 模擬合約結果寫入 getBettingStasticsResult
-    let ether=parseFloat(document.getElementById('ether').value);               // 抓 ether 值
-    return send('getBettingStastics',{value:web3.toWei(ether)})                 // 正式送出 getBettingStastics 交易 (跳出 MetaMask 視窗)
-}).retry()                                                                      // 當過程中發生錯誤 重新訂閱Observable 會從Rx.Observable.fromEvent 開始
-.subscribe({                                                                    // 訂閱此 Observable(在此之前是不會做任何事)
-    next:({result})=>{                                                          // 符合以上流程得到該次result並處理
-        $('#getBettingStasticsTxid').html(result)                               // 寫入Txid
-    },error:(error)=>{                                                          // 反之得到error 並處理
-        // noting           
-    },complete:()=>{                                                            // Observable 結束
+Rx.Observable.fromEvent($('#getBettingStasticsBtn'),'click')        // fromEvent 監聽事件發生
+.mergeMap(()=>{                                                     // mergeMap 承接上個結果 繼續做事 回傳Observable 則使用mergeMap, 如回傳一般值 使用 map 就好
+    let ether=parseFloat(document.getElementById('ether').value);   // 抓 ether 值
+    return call('getBettingStastics',{value:web3.toWei(ether)})     // 模擬合約
+}).mergeMap((result)=>{
+    $('#getBettingStasticsResult').html(JSON.stringify(result))     // 模擬合約結果寫入 getBettingStasticsResult
+    let ether=parseFloat(document.getElementById('ether').value);   // 抓 ether 值
+    return send('getBettingStastics',{value:web3.toWei(ether)})     // 正式送出 getBettingStastics 交易 (跳出 MetaMask 視窗)
+}).retry()                                                          // 當過程中發生錯誤 重新訂閱Observable 會從Rx.Observable.fromEvent 開始
+.subscribe({                                                        // 訂閱此 Observable(在此之前是不會做任何事)
+    next:({result})=>{                                              // 符合以上流程得到該次result並處理
+        $('#getBettingStasticsTxid').html(result)                   // 寫入Txid
+    },error:(error)=>{                                              // 反之得到error 並處理
+        // noting
+    },complete:()=>{                                                // Observable 結束
         // noting
     }
 });
 
 Rx.Observable.fromEvent($('#addguessBtn'),'click')
-.mergeMap((result)=>{                                                           // 本合約沒有回傳值,故不做call模擬
-    let ether=parseFloat(document.getElementById('ether').value);               // 抓 ether 值
-    let guess=parseInt(document.getElementById('addguessValue').value);         // 抓 guess 值
-    return send('addguess',guess,{value:web3.toWei(ether)})                     // 送出交易 (跳出 MetaMask 視窗)
-}).retry()      
-.subscribe({        
-    next:(txid)=>{      
-        $('#addguessTxid').html(txid)                                           // 寫入Txid
+.mergeMap((result)=>{                                                   // 本合約沒有回傳值,故不做call模擬
+    let ether=parseFloat(document.getElementById('ether').value);       // 抓 ether 值
+    let guess=parseInt(document.getElementById('addguessValue').value); // 抓 guess 值
+    return send('addguess',guess,{value:web3.toWei(ether)})             // 送出交易 (跳出 MetaMask 視窗)
+}).retry()
+.subscribe({
+    next:(txid)=>{
+        $('#addguessTxid').html(txid)                                   // 寫入Txid
     }
 });
 
 Rx.Observable.fromEvent($('#findWinnersBtn'),'click')
 .mergeMap(()=>{
-    let value=parseInt(document.getElementById('findWinnersValue').value);      // 抓 findWinners 值
-    return call('findWinners',value)                                            // 模擬合約
-})  
-.subscribe((result)=>{  
-    $('#findWinnersResult').html(JSON.stringify(result))                        // 模擬合約結果寫入 findWinnersResult
+    let value=parseInt(document.getElementById('findWinnersValue').value);  // 抓 findWinners 值
+    return call('findWinners',value)                                        // 模擬合約
+})
+.subscribe((result)=>{
+    $('#findWinnersResult').html(JSON.stringify(result))                    // 模擬合約結果寫入 findWinnersResult
 })
 
 //===
@@ -176,7 +176,7 @@ Rx.Observable.fromEvent($('#finishBtn'),'click')
     return result1 ? result2 + result1  : "沒有贏家"
 }).subscribe({
     next:(data)=>{
-        $('#finishResult').html(data)                                           // 寫入finishResult
+        $('#finishResult').html(data)                                             // 寫入finishResult
     }
 });
 
@@ -202,9 +202,9 @@ Rx.Observable.fromEvent($('#setStatusPriceBtn'),'click')
 })
 
 
-let eventHistory = []                                                           // 因發現獲取的history 可能無序,故累積歷史並排序 
-Rx.Observable.fromEvent($('#history'),'click')                          
-.first()                                                                        // 只對第一次點擊有效
+let eventHistory = []                               // 因發現獲取的history 可能無序,故累積歷史並排序 
+Rx.Observable.fromEvent($('#history'),'click')
+.first()                                            // 只對第一次點擊有效
 .mergeMap(()=>{
     return Rx.Observable.create((observer) => {
         /**
@@ -217,11 +217,11 @@ Rx.Observable.fromEvent($('#history'),'click')
         })
     })
 })
-.distinct(data=>data.transactionHash)                                           // 以transactionHash為目標,過濾重複元素
-.mergeMap((data,a)=>{                           
-    return getReceipt(data.transactionHash)                         
-}).map((data)=>{                            
-    eventHistory.push(data);                                                    // 因發現獲取的history 可能無序,故累積歷史並排序 
+.distinct(data=>data.transactionHash)               // 以transactionHash為目標,過濾重複元素
+.mergeMap((data,a)=>{
+    return getReceipt(data.transactionHash)
+}).map((data)=>{
+    eventHistory.push(data);                        // 因發現獲取的history 可能無序,故累積歷史並排序 
     eventHistory = eventHistory.sort((x,y)=>{return x.blockNumber-y.blockNumber});
     return eventHistory;
 })
@@ -253,31 +253,3 @@ Rx.Observable.fromEvent($('#history'),'click')
         $('#event').html(tableContext)
     }
 })
-
-
-
-
-function loginView(){
-    if(web3 && web3.eth && web3.eth.coinbase){
-        contractInstance['getDeveloperAddress'].call((e,developer)=>{
-            if ( web3.eth.coinbase === developer){
-                $('#noLogin').css({display:'none'})
-                $('#forPlayer').css({display:'none'})
-                $('#forFounder').css({display:'block'})
-            }else{
-                $('#noLogin').css({display:'none'})
-                $('#forPlayer').css({display:'block'})
-                $('#forFounder').css({display:'none'})
-            }
-        })
-    }else{
-        $('#noLogin').css({display:'block'})
-        $('#forPlayer').css({display:'none'})
-        $('#forFounder').css({display:'none'})
-    }
-}
-loginView();
-
-setInterval(()=>{
-    loginView()
-},1000)
