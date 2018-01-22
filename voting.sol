@@ -2,9 +2,6 @@ pragma solidity ^0.4.4;
 
 contract Voting {
 
-  // liyuechun -> 10
-  // xietingfeng -> 5
-  // liudehua -> 20
   mapping (bytes32 => uint8) public votesReceived;
 
   // 存储候选人名字的数组

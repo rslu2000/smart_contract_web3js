@@ -11,67 +11,85 @@
   <div class="table-responsive">
     <table class="table table-bordered">
       <tr>
-        <td>state</td>
+        <td>狀態</td>
         <td id="state"></td>
-        <td>getBalance</td>
+        <td>餘額</td>
         <td id="getBalance"></td>
       </tr>
       <tr>
-        <td>getMaxContenders</td>
+        <td>最大競爭人數</td>
         <td id="getMaxContenders"></td>
-        <td>getLotteryMoney</td>
+        <td>樂透金額</td>
         <td id="getLotteryMoney"></td>
       </tr>
       <tr>
-        <td>getDeveloperFee</td>
+        <td>開發者費用</td>
         <td id="getDeveloperFee"></td>
-        <td>getBettingPrice</td>
+        <td>投注金額</td>
         <td id="getBettingPrice"></td>
       </tr>
       <tr>
-        <td>getDeveloperAddress</td>
+        <td>開發者地址</td>
         <td id="getDeveloperAddress"></td>
-        <td>getBettingStatus</td>
+        <td>投注狀態</td>
         <td id="getBettingStatus"></td>
       </tr>
     </table>
-    pay ether<input id="ether">
-    <div id="noLogin">Not found web3 or locked account</div>
-    <div id="forPlayer" style="display:none">addguess
-      <input id="addguessValue">
-      <button id="addguessBtn">click</button>
-      txid:<span id="addguessTxid"></span>
+    
+    <div id="noLogin">找不到 web3 或 帳號鎖上中</div>
+    <div id="forPlayer" style="display:none">
+      <div>下注賭金<input id="ether">(每注0.1)</div>
+      <div>輸入猜測值<input id="addguessValue"><button id="addguessBtn">點擊</button>交易編號:<span id="addguessTxid"></span></div>
     </div>
     <div id="forFounder" style="display:none">
-      <div>getBettingStastics
-        <button id="getBettingStasticsBtn">click</button>
-        txid:<span id="getBettingStasticsTxid"></span> call result:<span id="getBettingStasticsResult"></span>
-      </div>
-      <div>findWinners
+
+      <div>輸入一個目標值找最接近的贏家
         <input id="findWinnersValue">
-        <button id="findWinnersBtn">click</button>
-        call result:<span id="findWinnersResult"></span>
+        <button id="findWinnersBtn">點擊</button>
+        回傳:
+        <span id="findWinnersResult"></span>
       </div>
-      <div>finish
-        <button id="finishBtn">click</button>
-        result:<span id="finishResult"></span>
+      <br/>
+      <div>設定競爭條件 競爭人數:
+        <input id="_contenders"> 投注價格:
+        <input id="_bettingprice">
+        <button id="setBettingConditionBtn">點擊</button>
+        交易編號:
+        <span id="setBettingConditionTxid"></span>
       </div>
-      <div>setBettingCondition
-              _contenders:<input id="_contenders">
-              _bettingprice:<input id="_bettingprice">
-        <button id="setBettingConditionBtn">click</button>
-        txid:<span id="setBettingConditionTxid"></span>
+      <br/>
+      <div>開牌與派彩
+        <button id="finishBtn">點擊</button>
+        回傳:
+        <span id="finishResult"></span>
       </div>
-      <div>setStatusPrice
+      <br/>
+
+      <!-- <div>得到投注狀態
+        <button id="getBettingStasticsBtn">點擊</button>
+        交易編號:<span id="getBettingStasticsTxid"></span> call 回傳:<span id="getBettingStasticsResult"></span>
+      </div>
+      <div>設定狀態價格
         <input id="setStatusPriceValue">
-        <button id="setStatusPriceBtn">click</button>
-        txid:<span id="setStatusPriceTxid"></span>
-      </div>
+        <button id="setStatusPriceBtn">點擊</button>
+        交易編號:<span id="setStatusPriceTxid"></span>
+      </div> -->
     </div>
 
-    <div>Show Event <button id="history">History</button>:
-      <table class="table table-bordered" >
-        <thead><th><td>amount(wei)</td><td>balance(wei)</td><td>guess</td><td>lotterynumber</td><td>money(wei)</td><td>timestamp</td><td>winner</td></th></thead>
+    <div>
+      <button id="history">查詢歷史</button>:
+      <table class="table table-bordered">
+        <thead>
+          <th>
+            <td>莊家手續費(ether)</td>
+            <td>餘額(ether)</td>
+            <td>猜測值</td>
+            <td>答案</td>
+            <td>贏家所獲得彩金(ether)</td>
+            <td>開牌日期</td>
+            <td>贏家</td>
+          </th>
+        </thead>
         <tbody id="event"></tbody>
       </table>
     </div>

@@ -1,0 +1,36 @@
+<input id="importPrivateKeyInput"><br/>
+privateKey
+<div id="privateKey"></div>
+publicKey
+<div id="address"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.5.5/Rx.js"></script>
+<script charset="utf-8" src="https://cdn.ethers.io/scripts/ethers-v2.min.js" type="text/javascript">
+</script>
+
+<script>
+  Rx.Observable.fromEvent(document.getElementById('importPrivateKeyInput'), 'input')
+    .map((e) => {
+      let key = e.target.value;
+      let wallet = new ethers.Wallet(key.indexOf('0x') > -1 ? key : `0x${key}`)
+      return wallet
+    }).retry().catch((r) => {
+      console.log(r)
+      return Rx.Observable.of({
+        privateKey: '',
+        address: ''
+      })
+    }).subscribe({
+      next: (result) => {
+        document.getElementById('privateKey').innerText = result.privateKey;
+        document.getElementById('address').innerText = result.address;
+      },
+      error: (error) => {
+        console.log('error', error);
+      },
+      complete: () => {
+        console.log('complete')
+      }
+    })
+
+</script>
