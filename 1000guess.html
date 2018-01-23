@@ -23,7 +23,7 @@
         <td id="getLotteryMoney"></td>
       </tr>
       <tr>
-        <td>開發者費用</td>
+        <td>莊家抽頭</td>
         <td id="getDeveloperFee"></td>
         <td>投注金額</td>
         <td id="getBettingPrice"></td>
@@ -38,14 +38,14 @@
     
     <div id="noLogin">找不到 web3 或 帳號鎖上中</div>
     <div id="forPlayer" style="display:none">
-      <div>下注賭金<input id="ether">(每注0.1)</div>
-      <div>輸入猜測值<input id="addguessValue"><button id="addguessBtn">點擊</button>交易編號:<span id="addguessTxid"></span></div>
+      <div>下注賭金<input id="ether">(請依右上角之投注金額下注)</div>
+      <div>輸入猜測值<input id="addguessValue"><button id="addguessBtn">下注</button>交易編號:<span id="addguessTxid"></span></div>
     </div>
     <div id="forFounder" style="display:none">
 
       <div>輸入一個目標值找最接近的贏家
         <input id="findWinnersValue">
-        <button id="findWinnersBtn">點擊</button>
+        <button id="findWinnersBtn">尋找</button>
         回傳:
         <span id="findWinnersResult"></span>
       </div>
@@ -53,7 +53,7 @@
       <div>設定競爭條件 競爭人數:
         <input id="_contenders"> 投注價格(eth):
         <input id="_bettingprice">
-        <button id="setBettingConditionBtn">點擊</button>
+        <button id="setBettingConditionBtn">設定</button>
         交易編號:
         <span id="setBettingConditionTxid"></span>
       </div>
@@ -77,7 +77,7 @@
     </div>
 
     <div>
-      <button id="history">查詢歷史</button>:
+      <button id="history">查詢歷史賭局結果</button>:
       <table class="table table-bordered">
         <thead>
           <th>
