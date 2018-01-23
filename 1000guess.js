@@ -232,7 +232,7 @@ Rx.Observable.fromEvent($('#finishBtn'), 'click')
 Rx.Observable.fromEvent($('#setBettingConditionBtn'), 'click')
   .mergeMap(() => {
     let _contenders = parseInt(document.getElementById('_contenders').value); // 抓取 _contenders
-    let _bettingprice = parseInt(document.getElementById('_bettingprice').value)*1000000000000000000; // 抓取 _bettingprice
+    let _bettingprice = parseFloat(document.getElementById('_bettingprice').value)*1000000000000000000; // 抓取 _bettingprice
     return send('setBettingCondition', _contenders, _bettingprice) // 送出 setBettingCondition 交易 (跳出 MetaMask 視窗)
   }).retry().subscribe({
     next: (result) => {
