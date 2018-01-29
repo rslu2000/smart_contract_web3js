@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Hello World DApp</title>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body class="container">
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <tr>
+        <td>莊家</td>
+        <td id="maker"></td>
+        <td>合約內總賭資</td>
+        <td id="contractBalance"></td>
+      </tr>
+      <tr>
+        <td>開發者</td>
+        <td id="developer"></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+
+    <div>
+      查詢玩家狀態
+      <input id="playersAddress">
+      <button id="playersBtn">點擊</button>
+      回傳
+      <div id="playersResult">
+        <div>玩家編號 <input id="playerID" disabled> </div>
+        <div>地址 <input id="playerAddress" disabled> </div>
+        <div>入金量 <input id="playerBetting" disabled> </div>
+        <div>貢獻值 <input id="playerContribution" disabled> </div>
+        <div>餘額 <input id="playerBalance" disabled> </div>
+        <div>總入金量 <input id="playerTotalBettingMoney" disabled> </div>
+        <div>總貢獻值 <input id="playerTotalContribution" disabled> </div>
+        <div>輸贏多少 <input id="playerWinOrLose" disabled> </div>
+      </div>
+    </div>
+
+    <br/>
+    <div>以太幣
+      <input id="ether">
+    </div>
+    <div id="noLogin">找不到 web3 或 帳號鎖上中</div>
+    <div id="forPlayer" style="display:none">
+      <div>入金
+        <button id="money_receivedBtn">點擊</button>
+      </div>
+    </div>
+    <div id="forDeveloper" style="display:none">
+      <div>設定Maker
+        <input id="setMakerValue">
+        <button id="setMakerBtn">點擊</button>
+      </div>
+    </div>
+    <div id="forMaker" style="display:none">
+      <div>莊家注資
+        <input id="addBalanceValue">
+        <button id="addBalanceBtn">點擊</button>
+      </div>
+      <div>設定玩家餘額 地址
+        <input id="settlementAddressValue"> 餘額
+        <input id="settlementBalanceValue">
+        <button id="settlementBtn">點擊</button>
+      </div>
+      <div>玩家申請提款
+        <input id="finishValue">
+        <button id="finishBtn">點擊</button>
+      </div>
+    </div>
+    <div>
+      入金紀錄：
+      <table class="table table-bordered">
+        <thead> <tr> <th>玩家</th> <th>入金量</th> <th>日期</th> </tr> </thead>
+        <tbody id="moneyReceivedEventHistory">
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      入金量排行：
+      <table class="table table-bordered">
+        <thead> <tr> <th>玩家</th> <th>入金量</th></tr> </thead>
+        <tbody id="bettingMoneyRanking">
+        </tbody>
+      </table>
+    </div>
+    <div>
+      貢獻排行：
+      <table class="table table-bordered">
+        <thead> <tr> <th>玩家</th> <th>貢獻量</th></tr> </thead>
+        <tbody id="contributionRanking">
+        </tbody>
+      </table>
+    </div>
+    <div>
+      輸贏排行：
+      <table class="table table-bordered">
+        <thead> <tr> <th>玩家</th> <th>輸贏</th></tr> </thead>
+        <tbody id="winOrLoseRanking">
+        </tbody>
+      </table>
+    </div>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.5.5/Rx.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" defer></script>
+<script src="./dubo.js"></script>
+
+</html>
