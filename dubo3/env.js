@@ -1,1 +1,0 @@
-module.exports.filterUrl='https://api.infura.io/v1/jsonrpc/ropsten/eth_getLogs';
