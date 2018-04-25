@@ -37,23 +37,32 @@ let contractFunctions = ['state', 'getBalance', 'getLotteryMoney', 'getDeveloper
 setInterval(() => {
   for (let contractFunction of contractFunctions) {
     contractInstance[contractFunction].call((e, result) => {
-      document.getElementById(contractFunction).innerText = result.toString()/ 1000000000000000000
-    })
-    contractInstance['getMaxContenders'].call((e, result) => {
-        document.getElementById('getMaxContenders').innerText = result.toString()
-      })
-    contractInstance['getDeveloperAddress'].call((e, result) => {
-      document.getElementById('getDeveloperAddress').innerText = result
-    })
-    contractInstance['getBettingStatus'].call((e, result) => {
-      result[0] =Number( result[0] )
-      result[1] =Number( result[1] )
-      result[2] = result[2] / 1000000000000000000
-      result[3] = result[3] / 1000000000000000000
-      result[4] = result[4] / 1000000000000000000
-      document.getElementById('getBettingStatus').innerText = JSON.stringify(result,null,2);
+      console.log(result.toNumber())
+      document.getElementById(contractFunction).innerText = result.toNumber()/ 1000000000000000000
     })
   }
+  contractInstance['getMaxContenders'].call((e, result) => {
+    document.getElementById('getMaxContenders').innerText = result.toString()
+  })
+  contractInstance['getDeveloperAddress'].call((e, result) => {
+    document.getElementById('getDeveloperAddress').innerText = result
+  })
+  contractInstance['getBettingStatus'].call((e, result) => {
+    console.log('result[2]',result[2])
+    result[0] = Number( result[0] );
+    result[1] = Number( result[1] );
+    result[2] = result[2] / 1000000000000000000;
+    result[3] = result[3] / 1000000000000000000;
+    result[4] = result[4] / 1000000000000000000;
+    
+
+    document.getElementById('getBettingStatus').innerText = 
+    `合約狀態：${result[0]?'上鎖':'開放下注中'}
+      累積猜測次數:${result[1]}
+      累積樂透淨額:${result[2]}
+      合約餘額:${result[3]}
+      每注金額:${result[4]}`
+  })
 }, 1000);
 
 
@@ -95,7 +104,6 @@ function send(contractFunction, ...args) {
  * @param {string} txid 
  */
 function getReceipt(txid) {
-  console.log(txid)
   return Rx.Observable.create((observer) => {
     web3.eth.getTransactionReceipt(txid, (e, result) => {
       // console.log('receipt',e,result);
@@ -281,30 +289,34 @@ Rx.Observable.fromEvent($('#history'), 'click')
   })
   .subscribe({
     next: (data) => {
+      console.log(data)
       // 人工組合成表格
       console.log("=============")
       let tableContext = "";
       let index = 0;
       for (let item of data) {
-        let SentPrizeToWinnerRow = '<td colspan="6"></td></tr>'
+        let SentPrizeToWinnerRow = '<td colspan="5"></td></tr>'
         let SentDeveloperFeeRow = "";
 
         for (let log of item.logs) {
           if (log.topics[0] === "0x16772b6ac3e9823e1f39326dbe356dac767fad821f4a2af003066838235e1bbd") {
             let SentPrizeToWinner = decodeSentPrizeToWinner(log.data)
-            if (SentPrizeToWinnerRow === '<td colspan="6"></td></tr>') {
+            if (SentPrizeToWinnerRow === '<td colspan="5"></td></tr>') {
               SentPrizeToWinnerRow = `<td>${SentPrizeToWinner.guess}</td><td>${SentPrizeToWinner.lotterynumber}</td><td>${SentPrizeToWinner.money}</td><td>${SentPrizeToWinner.timestamp}</td><td>${SentPrizeToWinner.winner}</td></r>`;
             } else {
               SentPrizeToWinnerRow += `<tr><td>${SentPrizeToWinner.guess}</td><td>${SentPrizeToWinner.lotterynumber}</td><td>${SentPrizeToWinner.money}</td><td>${SentPrizeToWinner.timestamp}</td><td>${SentPrizeToWinner.winner}</td></tr>`
             }
           } else if (log.topics[0] === "0xf758ff59202247fe26bd4bd951f620cf543dc36b500de667d055cb5816def873") {
             let SentDeveloperFee = decodeSentDeveloperFee(log.data)
-            SentDeveloperFeeRow = `<tr><td rowspan="${item.logs.length -1 }">${++index}</td><td rowspan="${item.logs.length -1 }">${SentDeveloperFee.amount}</td><td rowspan="${item.logs.length -1 }">${SentDeveloperFee.balance}</td>`
+            SentDeveloperFeeRow = `<tr><td rowspan="${ item.logs.length -1 || 1 }">${++index}</td><td rowspan="${ item.logs.length -1 || 1 }">${SentDeveloperFee.amount}</td><td rowspan="${ item.logs.length -1 || 1 }">${SentDeveloperFee.balance}</td>`
           }
+          // console.log(item.logs,SentPrizeToWinnerRow)
         }
+        
         tableContext += SentDeveloperFeeRow + SentPrizeToWinnerRow;
       }
       $('#event').html(tableContext)
+      
     }
   })
 
