@@ -222,7 +222,7 @@ Rx.Observable.fromEvent($('#finishBtn'), 'click')
     for (let log of data.logs) {
       if (log.topics[0] === "0x16772b6ac3e9823e1f39326dbe356dac767fad821f4a2af003066838235e1bbd") {
         let SentPrizeToWinner = decodeSentPrizeToWinner(log.data)
-        result1 += `,玩家猜測值：${SentPrizeToWinner.guess},答案：${SentPrizeToWinner.lotterynumber},金額：${SentPrizeToWinner.money},開牌日期：${SentPrizeToWinner.timestamp},贏家：${SentPrizeToWinner.winner}\n`;
+        result1 += `,玩家猜測值：${SentPrizeToWinner.guess},開獎號碼：${SentPrizeToWinner.lotterynumber},金額：${SentPrizeToWinner.money},開牌日期：${SentPrizeToWinner.timestamp},贏家：${SentPrizeToWinner.winner}\n`;
       } else if (log.topics[0] === "0xf758ff59202247fe26bd4bd951f620cf543dc36b500de667d055cb5816def873") {
         let SentDeveloperFee = decodeSentDeveloperFee(log.data)
         result2 = `累計總額：${SentDeveloperFee.amount},餘額：${SentDeveloperFee.balance}`
