@@ -37,7 +37,6 @@ let contractFunctions = ['state', 'getBalance', 'getLotteryMoney', 'getDeveloper
 setInterval(() => {
   for (let contractFunction of contractFunctions) {
     contractInstance[contractFunction].call((e, result) => {
-      console.log(result.toNumber())
       document.getElementById(contractFunction).innerText = result.toNumber()/ 1000000000000000000
     })
   }
@@ -48,7 +47,6 @@ setInterval(() => {
     document.getElementById('getDeveloperAddress').innerText = result
   })
   contractInstance['getBettingStatus'].call((e, result) => {
-    console.log('result[2]',result[2])
     result[0] = Number( result[0] );
     result[1] = Number( result[1] );
     result[2] = result[2] / 1000000000000000000;
@@ -283,15 +281,13 @@ Rx.Observable.fromEvent($('#history'), 'click')
   }).map((data) => {
     eventHistory.push(data); // 因發現獲取的history 可能無序,故累積歷史並排序 
     eventHistory = eventHistory.sort((x, y) => {
-      return x.blockNumber - y.blockNumber
+      return y.blockNumber - x.blockNumber
     });
     return eventHistory;
   })
   .subscribe({
     next: (data) => {
-      console.log(data)
       // 人工組合成表格
-      console.log("=============")
       let tableContext = "";
       let index = 0;
       for (let item of data) {
