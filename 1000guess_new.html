@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Hello World DApp</title>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body class="container">
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <tr>
+        <td>狀態</td>
+        <td id="state"></td>
+        <td>合約餘額</td>
+        <td id="getBalance"></td>
+      </tr>
+      <tr>
+        <td>最大競爭人數</td>
+        <td id="getMaxContenders"></td>
+        <td>累積樂透淨額</td>
+        <td id="getLotteryMoney"></td>
+      </tr>
+      <tr>
+        <td>莊家抽頭</td>
+        <td id="getDeveloperFee"></td>
+        <td>投注金額</td>
+        <td id="getBettingPrice"></td>
+      </tr>
+      <tr>
+        <td>開發者地址</td>
+        <td id="getDeveloperAddress"></td>
+        <td>投注狀態</td>
+        <td id="getBettingStatus"></td>
+      </tr>
+    </table>
+
+    <div id="noLogin">----------下注區---------</div>
+    <div id="forPlayer" style="display:yes">
+      <div>下注賭金<input id="ether">(請依右上角之投注金額下注)</div>
+      <div>輸入猜測值<input id="addguessValue"><button id="addguessBtn" onclick=betting()>下注</button>交易編號:<span id="addguessTxid"></span></div>
+    </div><br>
+    <!-- <div id="forFounder" style="display:yes">---------修改遊戲參數區------------
+
+      <div>輸入一個目標值找最接近的贏家
+        <input id="findWinnersValue">
+        <button id="findWinnersBtn">尋找</button>
+        回傳:
+        <span id="findWinnersResult"></span>
+      </div>
+      <br/>
+      <div>設定競爭條件 競爭人數:
+        <input id="_contenders"> 投注價格(eth):
+        <input id="_bettingprice">
+        <button id="setBettingConditionBtn">設定</button>
+        交易編號:
+        <span id="setBettingConditionTxid"></span>
+      </div> -->
+      <br/>
+
+      <!-- <div>---------開牌與派彩---------<br>
+        <button id="finishBtn" onclick=finish()>開牌與派彩</button>
+        回傳:
+        <span id="finishResult"></span>
+      </div>
+      <br/> -->
+
+    </div>
+
+    <!-- <div>
+      <button id="history">查詢歷史賭局結果</button>:
+      <table class="table table-bordered">
+        <thead>
+          <th>
+            <td>莊家手續費(ether)</td>
+            <td>餘額(ether)</td>
+            <td>猜測值</td>
+            <td>開獎號碼</td>
+            <td>贏家所獲得彩金(ether)</td>
+            <td>開牌日期</td>
+            <td>贏家</td>
+          </th>
+        </thead>
+        <tbody id="event"></tbody>
+      </table>
+    </div>
+  </div> -->
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.4.0/web3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.5.5/Rx.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" defer></script>
+<script src="./1000guess_new.js"></script>
+
+</html>
