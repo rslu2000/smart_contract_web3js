@@ -9,19 +9,25 @@
 
   <script src="webpage_Wallet.js"></script>
   <div class=${css.box} id="app">
-    <label for="fname1"> 主鏈最新區塊數:   </label>
+    <label for="fname1"> Mainnet主鏈最新區塊數:   </label>
     <input type="text" id="latestBlocks_mainnet" name="blocks1" value="">
     <button class="button1" onclick=queryBlocks()>查詢最新區塊數</button><br>
-    <label for="fname2">測試鏈最新區塊數:</label>
+    <label for="fname2">Ropsten測試鏈最新區塊數:</label>
     <input type="text" id="latestBlocks_testnet" name="blocks2" value=""><br>
-
+    <label for="fname2">Rinkeby測試鏈最新區塊數:</label>
+    <input type="text" id="latestBlocks_rinkeby" name="blocks3" value=""><br>
+    <br><br>
     <label for="fname">錢包地址:</label>
-    <input type="text" id="walletaddress" name="addrsss" value="0x9A741591A7E264Fa28aeBf87C70A2c831eD8d305">
+    <input type="text" id="walletaddress" name="addrsss" value="0xa878C38b27D0C7b3b30Fbf5DBE417f56357D06Fb">
     <button class="queryBalance_button" onclick=queryBalance()>查詢 區塊鏈上 Ether 餘額</button><br>
     <label for="fname">Mainnet上錢包ETH餘額:</label>
     <input type="text" id="walletbalance" name="balance" value=""><br>
     <label for="fname">testnet（Ropestan)上錢包ETH餘額:</label>
-    <input type="text" id="walletbalance2" name="balance2" value=""><br><br><br>
+    <input type="text" id="walletbalance2" name="balance2" value=""><br>
+    <label for="fname">testnet（Rinkeby)上錢包ETH餘額:</label>
+    <input type="text" id="walletbalance3" name="balance3" value=""><br>
+    <label for="fname">testnet（Ropestan)上此錢包E地址的Nonce值:</label>
+    <input type="text" id="nonce1" name="balance3" value=""><br><br><br>
 
     <label for="fname">發送ETH給接收者，接收者地址:</label>
     <input type="text" id="receiverAddress" name="receiver" value="">    範例：盧老師的教學用錢包地址：0xa878C38b27D0C7b3b30Fbf5DBE417f56357D06Fb<br>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Hello World DApp</title>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body class="container">
+  <h1>String版的投票合約</h1>
+  <h2>本範例的智能合約部署在測試鏈RInkeby上，合約地址為：<br> 0x100d9cc25476d92a05f009cfe6536fac794544eb</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Candidate</th>
+          <th>Votes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>咖啡</td>
+          <td id="candidate-1"></td>
+        </tr>
+        <tr>
+          <td>紅茶</td>
+          <td id="candidate-2"></td>
+        </tr>
+        <tr>
+          <td>奶茶</td>
+          <td id="candidate-3"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  輸入投票對象名稱： <input type="text" id="candidate" /><br>
+  <br><label for="fname">請匯入發送者的私鑰:</label>
+  <input type="text" id="senderPrivateKey" name="senderPk" value=""><br>
+  <a href="#" onclick="voteForCandidate()" class="btn btn-primary">用小狐狸投票Vote</a><br><br>
+  <a href="#" onclick="sendETH()" class="btn btn-primary">用自己私鑰投票Vote</a>
+
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.5.0/web3.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script src="./index5.js"></script>
+
+</html>
