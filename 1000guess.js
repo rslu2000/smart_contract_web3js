@@ -1,17 +1,38 @@
+if (typeof web3 !== 'undefined') {
+  web3 = new Web3(web3.currentProvider);
+  console.log("自注入Web3 0.20.7載入生效 + Metamask的provider", web3.version )
+}
+else{
+// set the provider you want from Web3.providers
+  console.log("不使用meta")
+  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+}
+
 let abi = [{ "constant": true, "inputs": [], "name": "getBalance", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "getBettingStatus", "outputs": [{ "name": "", "type": "uint256" }, { "name": "", "type": "uint256" }, { "name": "", "type": "uint256" }, { "name": "", "type": "uint256" }, { "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "getDeveloperAddress", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "value", "type": "uint256" }], "name": "findWinners", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "getMaxContenders", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "getBettingStastics", "outputs": [{ "name": "", "type": "uint256[20]" }], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": true, "inputs": [], "name": "getBettingPrice", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "getDeveloperFee", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "getLotteryMoney", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_contenders", "type": "uint256" }, { "name": "_bettingprice", "type": "uint256" }], "name": "setBettingCondition", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "state", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "guess", "type": "uint256" }], "name": "addguess", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": false, "inputs": [], "name": "finish", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "value", "type": "uint256" }], "name": "setStatusPrice", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "winner", "type": "address" }, { "indexed": false, "name": "money", "type": "uint256" }, { "indexed": false, "name": "guess", "type": "uint256" }, { "indexed": false, "name": "gameindex", "type": "uint256" }, { "indexed": false, "name": "lotterynumber", "type": "uint256" }, { "indexed": false, "name": "timestamp", "type": "uint256" }], "name": "SentPrizeToWinner", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "amount", "type": "uint256" }, { "indexed": false, "name": "balance", "type": "uint256" }], "name": "SentDeveloperFee", "type": "event" }]
 let guess1000Contract = web3.eth.contract(abi);
 let contractInstance = guess1000Contract.at('0x5a96d6a948aaa5019a1224c46a0d458f3276602a');
 console.log('contractInstance', contractInstance);
 
-Date.prototype.Format = function (fmt) { //author: meizz 
+var wallet_address;
+    async function getAccount() {
+		var accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+		var account = accounts[0];
+        wallet_address=account;
+        document.getElementById('wallet').innerText="當前玩家地址："+account;
+        console.log(wallet_address)
+	    return account
+    }
+    getAccount()
+
+Date.prototype.Format = function (fmt) { //author: meizz
     var o = {
-        "M+": this.getMonth() + 1, //月份 
-        "d+": this.getDate(), //日 
-        "H+": this.getHours(), //小时 
-        "m+": this.getMinutes(), //分 
-        "s+": this.getSeconds(), //秒 
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-        "S": this.getMilliseconds() //毫秒 
+        "M+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "H+": this.getHours(), //小时
+        "m+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
     };
     if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
     for (var k in o)
@@ -23,7 +44,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
 /**
  * 宣告事件變數 監聽從0塊到此合約當下的 SentPrizeToWinne SentDeveloperFee
  */
-// let eventSentPrizeToWinner=contractInstance.SentPrizeToWinner(null,{fromBlock:0,toBlock:'latest'}); //用不到了,改以getTransactionReceipt抓取
+let eventSentPrizeToWinner=contractInstance.SentPrizeToWinner(null,{fromBlock:0,toBlock:'latest'}); //用不到了,改以getTransactionReceipt抓取
 let eventSentDeveloperFee = contractInstance.SentDeveloperFee(null, {
   fromBlock: 0,
   toBlock: 'latest'
@@ -52,9 +73,9 @@ setInterval(() => {
     result[2] = result[2] / 1000000000000000000;
     result[3] = result[3] / 1000000000000000000;
     result[4] = result[4] / 1000000000000000000;
-    
 
-    document.getElementById('getBettingStatus').innerText = 
+
+    document.getElementById('getBettingStatus').innerText =
     `合約狀態：${result[0]?'上鎖':'開放下注中'}
       累積猜測次數:${result[1]}
       累積樂透淨額:${result[2]}
@@ -68,7 +89,7 @@ setInterval(() => {
 /**
  * @description 模擬交易過程
  * @param {string} contractFunction 合約名稱
- * @param {args} args 參數 
+ * @param {args} args 參數
  */
 function call(contractFunction, ...args) {
   return Rx.Observable.create((observer) => { // Observable 可觀察對象, observer觀察者
@@ -84,7 +105,7 @@ function call(contractFunction, ...args) {
 /**
  * @description 送出交易
  * @param {string} contractFunction 合約名稱
- * @param {args} args 參數 
+ * @param {args} args 參數
  */
 function send(contractFunction, ...args) {
   return Rx.Observable.create((observer) => {
@@ -99,7 +120,7 @@ function send(contractFunction, ...args) {
 
 /**
  * @description 取得交易logs
- * @param {string} txid 
+ * @param {string} txid
  */
 function getReceipt(txid) {
   return Rx.Observable.create((observer) => {
@@ -119,7 +140,7 @@ function decodeSentPrizeToWinner(data) {
   let gameindex = parseInt(data.substr(2 + 64 * 3, 64), 16) + ""
   let lotterynumber = parseInt(data.substr(2 + 64 * 4, 64), 16) + ""
   let timestamp = parseInt(data.substr(2 + 64 * 5, 64), 16) + ""
-  
+
   let SentPrizeToWinner = {
     winner: winner,
     money: money/1000000000000000000,
@@ -145,12 +166,14 @@ Rx.Observable.fromEvent($('#getBettingStasticsBtn'), 'click') // fromEvent 監�
   .mergeMap(() => { // mergeMap 承接上個結果 繼續做事 回傳Observable 則使用mergeMap, 如回傳一般值 使用 map 就好
     let ether = parseFloat(document.getElementById('ether').value); // 抓 ether 值
     return call('getBettingStastics', {
+      from: wallet_address,
       value: web3.toWei(ether)
     }) // 模擬合約
   }).mergeMap((result) => {
     $('#getBettingStasticsResult').html(JSON.stringify(result)) // 模擬合約結果寫入 getBettingStasticsResult
     let ether = parseFloat(document.getElementById('ether').value); // 抓 ether 值
-    return send('getBettingStastics', {
+    return call('getBettingStastics', {
+      from: wallet_address,
       value: web3.toWei(ether)
     }) // 正式送出 getBettingStastics 交易 (跳出 MetaMask 視窗)
   }).retry() // 當過程中發生錯誤 重新訂閱Observable 會從Rx.Observable.fromEvent 開始
@@ -161,7 +184,7 @@ Rx.Observable.fromEvent($('#getBettingStasticsBtn'), 'click') // fromEvent 監�
       $('#getBettingStasticsTxid').html(result) // 寫入Txid
     },
     error: (error) => { // 反之得到error 並處理
-      // noting           
+      // noting
     },
     complete: () => { // Observable 結束
       // noting
@@ -173,6 +196,7 @@ Rx.Observable.fromEvent($('#addguessBtn'), 'click')
     let ether = parseFloat(document.getElementById('ether').value); // 抓 ether 值
     let guess = parseInt(document.getElementById('addguessValue').value); // 抓 guess 值
     return send('addguess', guess, {
+      from: wallet_address,
       value: web3.toWei(ether)
     }) // 送出交易 (跳出 MetaMask 視窗)
   }).retry()
@@ -191,22 +215,13 @@ Rx.Observable.fromEvent($('#findWinnersBtn'), 'click')
     $('#findWinnersResult').html(JSON.stringify(result)) // 模擬合約結果寫入 findWinnersResult
   })
 
-//===
-// 不影響狀態,交易花 gas ,純粹取結果, 故 不如只做call 取返回值就好
-//===
-// .mergeMap((result)=>{
-//     $('#findWinnersResult').html(JSON.stringify(result))                    // 模擬合約結果寫入 findWinnersResult
-//     let value=parseInt(document.getElementById('findWinnersValue').value);  // 抓 findWinners 值
-//     return send('findWinners',value)                                        // 正式送出 findWinners交易 (跳出 MetaMask 視窗)
-// }).retry().subscribe({
-//     next:(txid)=>{
-//         $('#findWinnersTxid').html(txid)
-//     }
-// });
 
 Rx.Observable.fromEvent($('#finishBtn'), 'click')
   .mergeMap(() => {
-    return send('finish') // 送出 finish 交易
+    return send('finish',{
+      from: wallet_address,
+      value: web3.toWei(0)
+    }) // 送出 finish 交易
   }).retry().mergeMap((txid) => {
     console.log(txid)
     $('#finishTxid').html('')
@@ -222,10 +237,10 @@ Rx.Observable.fromEvent($('#finishBtn'), 'click')
     for (let log of data.logs) {
       if (log.topics[0] === "0x16772b6ac3e9823e1f39326dbe356dac767fad821f4a2af003066838235e1bbd") {
         let SentPrizeToWinner = decodeSentPrizeToWinner(log.data)
-        result1 += `,玩家猜測值：${SentPrizeToWinner.guess},開獎號碼：${SentPrizeToWinner.lotterynumber},金額：${SentPrizeToWinner.money},開牌日期：${SentPrizeToWinner.timestamp},贏家：${SentPrizeToWinner.winner}\n`;
+        result1 += `,玩家猜測值：${SentPrizeToWinner.guess},開獎號碼：${SentPrizeToWinner.lotterynumber},贏家彩金金額：${SentPrizeToWinner.money},開牌日期：${SentPrizeToWinner.timestamp},贏家：${SentPrizeToWinner.winner}\n`;
       } else if (log.topics[0] === "0xf758ff59202247fe26bd4bd951f620cf543dc36b500de667d055cb5816def873") {
         let SentDeveloperFee = decodeSentDeveloperFee(log.data)
-        result2 = `累計總額：${SentDeveloperFee.amount},餘額：${SentDeveloperFee.balance}`
+        result2 = `莊家手續費累計總額：${SentDeveloperFee.amount},莊家手續費餘額：${SentDeveloperFee.balance}`
       }
     }
     return result1 ? result2 + result1 : "沒有贏家"
@@ -257,7 +272,7 @@ Rx.Observable.fromEvent($('#setStatusPriceBtn'), 'click')
   })
 
 
-let eventHistory = [] // 因發現獲取的history 可能無序,故累積歷史並排序 
+let eventHistory = [] // 因發現獲取的history 可能無序,故累積歷史並排序
 Rx.Observable.fromEvent($('#history'), 'click')
   .first() // 只對第一次點擊有效
   .mergeMap(() => {
@@ -279,7 +294,7 @@ Rx.Observable.fromEvent($('#history'), 'click')
   .mergeMap((data, a) => {
     return getReceipt(data.transactionHash)
   }).map((data) => {
-    eventHistory.push(data); // 因發現獲取的history 可能無序,故累積歷史並排序 
+    eventHistory.push(data); // 因發現獲取的history 可能無序,故累積歷史並排序
     eventHistory = eventHistory.sort((x, y) => {
       return y.blockNumber - x.blockNumber
     });
@@ -308,14 +323,13 @@ Rx.Observable.fromEvent($('#history'), 'click')
           }
           // console.log(item.logs,SentPrizeToWinnerRow)
         }
-        
+
         tableContext += SentDeveloperFeeRow + SentPrizeToWinnerRow;
       }
       $('#event').html(tableContext)
-      
+
     }
   })
-
 
 
 
@@ -323,16 +337,19 @@ function loginView() {
   if (web3 && web3.eth && web3.eth.coinbase) {
     contractInstance['getDeveloperAddress'].call((e, developer) => {
       if (web3.eth.coinbase === developer) {
+        // console.log("coinbase:",web3.eth.coinbase);
+        // console.log('開發者帳號開啟中:',developer);
         $('#noLogin').css({
           display: 'none'
         })
         $('#forPlayer').css({
-          display: 'none'
+          display: 'block'
         })
         $('#forFounder').css({
           display: 'block'
         })
       } else {
+        console.log('一般用戶帳號開啟中');
         $('#noLogin').css({
           display: 'none'
         })
@@ -359,5 +376,6 @@ function loginView() {
 loginView();
 
 setInterval(() => {
-  loginView()
+  loginView();
+  getAccount();
 }, 1000)

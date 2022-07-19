@@ -5,10 +5,18 @@
   <title>Hello World DApp</title>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
   <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+  <script src="./web3-0.20.7.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@0.20.6/dist/web3.js"></script> -->
+  <!-- <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script> -->
+
 </head>
 
 <body class="container">
+  <h1>Dapp應用範例：去中心化樂透彩</h1>
+  <h2 >Ropsten測試鏈上合約地址：0x5a96d6a948aaa5019a1224c46a0d458f3276602a</h2>
+  <h1>樂透彩即時看盤區</h1>
   <div class="table-responsive">
+    <h3 id="wallet" value="xx">當前玩家地址：</h3>
     <table class="table table-bordered">
       <tr>
         <td>狀態</td>
@@ -35,14 +43,15 @@
         <td id="getBettingStatus"></td>
       </tr>
     </table>
-    
+
     <div id="noLogin">找不到 web3 或 帳號鎖上中</div>
-    <div id="forPlayer" style="display:none">
+    <div id="forPlayer" >
+      <h1>下注區</h1>
       <div>下注賭金<input id="ether">(請依右上角之投注金額下注)</div>
       <div>輸入猜測值<input id="addguessValue"><button id="addguessBtn">下注</button>交易編號:<span id="addguessTxid"></span></div>
     </div>
-    <div id="forFounder" style="display:none">
-
+    <div id="forFounder">
+      <h1>---------莊家修改遊戲參數區------------</h1>
       <div>輸入一個目標值找最接近的贏家
         <input id="findWinnersValue">
         <button id="findWinnersBtn">尋找</button>
@@ -65,7 +74,7 @@
       </div>
       <br/>
 
-      <!-- <div>得到投注狀態
+      <div>得到投注狀態
         <button id="getBettingStasticsBtn">點擊</button>
         交易編號:<span id="getBettingStasticsTxid"></span> call 回傳:<span id="getBettingStasticsResult"></span>
       </div>
@@ -73,10 +82,11 @@
         <input id="setStatusPriceValue">
         <button id="setStatusPriceBtn">點擊</button>
         交易編號:<span id="setStatusPriceTxid"></span>
-      </div> -->
+      </div>
     </div>
 
     <div>
+      <h1>---------查詢歷史賭局結果------------</h1>
       <button id="history">查詢歷史賭局結果</button>:
       <table class="table table-bordered">
         <thead>
